@@ -1,0 +1,56 @@
+# All defaults live here; override with CLI: --training.max_steps 100
+project:
+  name: mistral-7b-dpo-pairs
+  seed: 42
+  offline: true
+
+hub:
+  token_env: HF_TOKEN
+  repo_model: FuJhen/mistral-instruct-7B-DPO
+
+model:
+  base: mistralai/Mistral-7B-Instruct-v0.3
+  load_in_4bit: true
+  compute_dtype: bfloat16  # or float16 if needed
+  double_quant: true
+  quant_type: nf4
+
+lora:
+  r: 8
+  alpha: 16
+  dropout: 0.05
+  target_modules: [k_proj, gate_proj, v_proj, up_proj, q_proj, o_proj, down_proj]
+
+training:
+  dataset: Intel/orca_dpo_pairs
+  split: train
+  batch_size_per_device: 2
+  grad_accum: 5
+  grad_ckpt: true
+  lr: 5e-5
+  scheduler: cosine
+  max_steps: 500
+  warmup_steps: 50
+  log_steps: 50
+  save_steps: 500
+  save_total_limit: 3
+  max_prompt_len: 1024
+  max_seq_len: 1536
+  bf16: true
+  out_dir: outputs/mistral-7b-dpo-pairs
+
+inference:
+  max_new_tokens: 200
+  temperature: 0.3
+  top_p: 0.5
+
+rag:
+  data_path: data/ChatbotDBData_answer.xlsx
+  embed_model: hkunlp/instructor-large
+  chunk_size: 800
+  chunk_overlap: 120
+  top_k: 4
+  score_threshold: null
+  persist_directory: outputs/chroma
+  collection_name: chatbot_demo
+  device: cuda
