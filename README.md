@@ -156,12 +156,12 @@ python bin/infer.py outputs/mistral-7b-dpo-pairs/final_adapter --user "Who is Su
 
 ### 3️⃣ 啟動 RAG 問答
 
-## 以 Chroma 建立/覆寫索引並互動查詢（使用 base 模型）
+以 Chroma 建立/覆寫索引並互動查詢（使用 base 模型）
 ```bash
 python bin/rag_demo.py --cfg conf/config.yaml --data data/ChatbotDBData_answer.xlsx
 ```
 
-## 若已完成 DPO 並有 LoRA adapter，可帶入以提升回覆
+若已完成 DPO 並有 LoRA adapter，可帶入以提升回覆
 ```bash
 python bin/rag_demo.py --cfg conf/config.yaml --adapter outputs/mistral-7b-dpo-pairs/final_adapter
 ```
@@ -191,6 +191,7 @@ Go to Product Page → Click "General" → Edit "Product Properties"
 - 模型優化
 - 對話記憶
 - 推論效能 
+
 
 
 
